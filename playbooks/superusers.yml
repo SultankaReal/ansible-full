@@ -1,0 +1,31 @@
+---
+- hosts: test
+  gather_facts: no
+  become: yes
+  become_user: root
+  become_method: sudo
+  tasks:
+  - name: create group of user
+    group: 
+      name: superusers 
+      state: present
+
+  - name: create user2
+    user: 
+      name: user2 
+      groups: superusers
+      append: yes
+
+  - name: create user3
+    user: 
+      name: user3
+      groups: superusers
+      append: yes
+
+  - name: validate the sudoers file before saving
+    ansible.builtin.lineinfile:
+      path: /etc/sudoers
+      state: present
+      regexp: '^%ADMIN ALL='
+      line: '%ADMIN ALL=(ALL) NOPASSWD: ALL'
+      validate: /usr/sbin/visudo -cf %s

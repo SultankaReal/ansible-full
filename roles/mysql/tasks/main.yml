@@ -1,0 +1,15 @@
+---
+# tasks file for mysql
+- name: install package
+  yum:
+    name: mariadb
+    state: installed
+ 
+- name: start service
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+
+#- name: start mariadb
+#  command: 'systemctl start mariadb'

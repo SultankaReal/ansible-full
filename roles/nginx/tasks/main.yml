@@ -1,0 +1,12 @@
+---
+- name: Install nginx web server
+  apt: 
+    name=nginx
+    state=latest
+  notify: 
+    - nginx systemd
+- name: Replace index.html
+  template: 
+    src: templates/index.html
+    dest: /var/www/html/index.html
+   

@@ -1,0 +1,30 @@
+---
+# tasks file for dnsmasq
+- name: install dnsmasq
+  yum:
+    name: dnsmasq
+    state: installed
+
+- name: start service
+  service:
+    name: dnsmasq
+    state: started
+    enabled: yes
+
+- name: creating a directory
+  file:
+    path: /etc/
+    state: directory
+
+- name: making a backup of dnsmasq file
+  copy:
+    src: /etc/dnsmasq.conf
+    dest: /etc/dnsmasq.conf.orig
+    remote_src: no
+
+- name: copying a file to the remote host
+  copy: 
+    src: /etc/dnsmasq.conf
+    dest: /etc/dnsmasq.conf
+    remote_src: yes
+
